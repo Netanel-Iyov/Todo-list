@@ -1,3 +1,4 @@
+##################################### Todo Requests #####################################
 POST http://localhost:3001/todo/new
 Content-Type: application/json
 
@@ -24,3 +25,24 @@ GET http://localhost:3001/todos
 DELETE  http://localhost:3001/todo/delete/646b0f6eaa033624916e4e0d
 ###
 PUT http://localhost:3001/todo/complete/646896aaeb678d41fa7667b2
+
+
+
+##################################### User Requests #####################################
+POST http://localhost:3001/user/new
+Content-Type: application/json
+
+{
+    "email": "nati16368447@gmail.com",
+    "password": "123456"
+}
+###
+
+GET http://localhost:3001/user/get
+Content-Type: application/json
+
+{
+    "email": "nati16368dd447@gmail.com",
+    "password": "1234567"
+}
+###
