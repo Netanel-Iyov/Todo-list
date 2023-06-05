@@ -10,6 +10,10 @@ const TodoSchema = new Schema({
         type: Boolean,
         default: false
     },
+    userID: {
+      type: String,
+      required: [true, "userID is required"]  
+    },
     timestamp: {
         type: String,
         default: Date.now()
