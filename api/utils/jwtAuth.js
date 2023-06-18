@@ -4,8 +4,7 @@ exports.jwtAuth = (req, res, next) => {
     token = req.body.token
 
     try {
-        // .env
-        const user = jwt.verify(token, 'your_secret_key')
+        const user = jwt.verify(token, process.env.JWT_SECRET_KEY)
 
         req.user = user
         next()

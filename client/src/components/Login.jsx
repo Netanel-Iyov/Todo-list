@@ -28,9 +28,9 @@ const LoginPage = () => {
         }
         const response = await fetch(API_BASE + '/user/login', requestOptions).then(res => res.json())
         
-        // Save the token in the local Storage
+        // Save the token and name in the local Storage
         localStorage.setItem('token', response.token)
-        console.log(response.token)
+        localStorage.setItem('first_name', response.first_name)
 
         if (!response.token) {
              setLoginError('* Wrong Login Details')

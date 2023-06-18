@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
@@ -16,7 +17,7 @@ app.use(express.json())
 app.use('/todo', todoRoute)
 app.use('/user', userRoute)
 
-mongoose.connect("mongodb://127.0.0.1:27017/todo-list", {
+mongoose.connect(`mongodb://${process.env.MONGO_DB_ADDRESS}:${process.env.MONGO_DB_PORT}/${process.env.MONGO_DB_NAME}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log("Connected to DB"))
@@ -25,8 +26,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/todo-list", {
 const Todo = require('./models/Todo')
 
 app.post('/todos', jwtAuth, async(req, res) => {
-    token = req.body.token
-    const user = jwt.verify(token, 'your_secret_key');
+    const user = req.user
     const todos = await Todo.find({ userID: user.id });
 
     res.json(todos);

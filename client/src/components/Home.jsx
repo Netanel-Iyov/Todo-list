@@ -2,6 +2,8 @@ import { useState, useEffect, Fragment } from "react";
 
 const API_BASE = "http://localhost:3001"
 
+
+
 const HomePage = () => {
     const [todos, setTodos] = useState([]);
     const [popupActive, setPopupActive] = useState(false)
@@ -18,7 +20,6 @@ const HomePage = () => {
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({token: token})
         }
-        console.log(requestOptions)
 
         fetch(API_BASE + '/todos', requestOptions)
         .then(res => res.json())
@@ -53,13 +54,13 @@ const HomePage = () => {
         GetTodos()
     }
 
-    const addTodo = async (data) => {
+    const addTodo = async (text) => {
         const requestOptions = {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({"text": data}) 
+            body: JSON.stringify({token: localStorage.token, "text": text}) 
         }
         const response = await fetch(API_BASE + '/todo/new/', requestOptions)
         .then(res => res.json())
@@ -70,9 +71,10 @@ const HomePage = () => {
         setNewTodo("")
     }
 
+
     return (
       <div className="App">
-            <h1>Welcome, Nati </h1>
+            <h1>Welcome, {`${localStorage.name}`} </h1>
             <h4>Your tasks</h4>
 
             <div className="todos">

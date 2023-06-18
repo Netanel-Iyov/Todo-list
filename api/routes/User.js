@@ -42,7 +42,7 @@ router.post('/login', async (req, res) => {
         // Generate and send the JWT token as a response
         const token = generateToken(user)
         res.status(200)
-        res.json({token})
+        res.json({token: token, first_name: user.first_name})
 
       } catch (error) {
             console.log(error)
@@ -53,8 +53,7 @@ router.post('/login', async (req, res) => {
 
 const generateToken = (user) => {
     const userData = { id: user._id, email: user.email, password:user.password }
-    // .env
-    const token = jwt.sign(userData, 'your_secret_key', {expiresIn: '1h'});
+    const token = jwt.sign(userData, process.env.JWT_SECRET_KEY, {expiresIn: '1h'});
     return token;
 } 
 

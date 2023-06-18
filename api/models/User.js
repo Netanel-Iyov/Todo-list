@@ -11,6 +11,14 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    first_name: {
+        type: String,
+        required: true
+    },
+    last_name: {
+        type: String,
+        required: true
+    },
     timestamp: {
         type: String,
         default: Date.now()

@@ -1,13 +1,17 @@
 const express = require('express')
 const router = express.Router()
 
+const { jwtAuth } = require('../utils/jwtAuth') 
 const Todo = require('../models/Todo')
 
-router.post('/new', async(req, res) => {  
+router.post('/new', jwtAuth ,async(req, res) => {  
     try {
+      
+        const user = req.user
+
         const todo = new Todo({
           text: req.body.text,
-          userID: req.body.userID
+          userID: user.id
         });
     
         const savedTodo = await todo.save();
