@@ -10,9 +10,17 @@ const HomePage = () => {
     useEffect (() => {
         GetTodos();
     }, [])
-    
+
     const GetTodos = () => {
-        fetch(API_BASE + "/todos")
+        const token = localStorage.token
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({token: token})
+        }
+        console.log(requestOptions)
+
+        fetch(API_BASE + '/todos', requestOptions)
         .then(res => res.json())
         .then(data => setTodos(data))
         .catch(err => console.error("While getting Todos the following error occured : ", err))
@@ -41,7 +49,6 @@ const HomePage = () => {
         }
         const deletedTodo = await fetch(API_BASE + '/todo/delete/' + id, requestOptions)
         .then(res => res.json()).then(data => console.log('"' + data.text + '" Was deleted successfully'))
-        .catch('Todo was not deleted successfully')
 
         GetTodos()
     }

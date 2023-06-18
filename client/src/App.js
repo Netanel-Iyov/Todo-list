@@ -1,22 +1,20 @@
-// import { set } from "mongoose";
 import React from 'react';
-import HomePage from "./components/Home"
-import LoginPage from "./components/Login" 
-//import { BrowserRouter as Router, Routes, Route, redirect as Redirect} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import HomePage from "./components/Home.jsx"
+import LoginPage from "./components/Login.jsx" 
 
 const App = () => {
     return (
-        // <Router>
-        //   <Routes>
-        //     <Route exact path="/home" component={HomePage} />
-        //     <Route exact path="/login" component={LoginPage} />
-        //     <Redirect from="/" to="/login" />
-        //   </Routes>
-        // </Router>
-        <div>
-            <LoginPage />
-        </div>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="*" element={<Navigate to="/login" />} /> 
+          </Routes>
+        </Router>
       );
 };
 
 export default App;
+
