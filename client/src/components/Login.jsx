@@ -23,7 +23,6 @@ const LoginPage = () => {
         const token = localStorage.getItem('token')
         const first_name = localStorage.getItem('first_name')
         const rememberMe = localStorage.getItem('remember_me')
-        console.log(token, first_name, rememberMe)
 
         if (rememberMe === 'false' || token === null || token === 'undefinded' || first_name === 'undefined' || first_name === null ) {
             return
@@ -67,7 +66,7 @@ const LoginPage = () => {
     const handleSignUp = () => {
         navigate('/registration'); // Replace '/registration' with the desired URL of your registration page
       };
-
+      
     return (
         <div className="bg-cover bg-no-repeat bg-center h-screen flex items-center justify-center" style={{ backgroundImage: `url(${backgroundImage})` }}>
             <div className="flex flex-col justify-center w-screen h-screen ">

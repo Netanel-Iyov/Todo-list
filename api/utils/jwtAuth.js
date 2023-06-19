@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 exports.jwtAuth = (req, res, next) => {
     token = req.body.token
-
+    
     try {
         const user = jwt.verify(token, process.env.JWT_SECRET_KEY)
 
@@ -10,6 +10,10 @@ exports.jwtAuth = (req, res, next) => {
         next()
 
     } catch(err) {
-        return res.redirect("/")
+        if (err.name === 'TokenExpiredError') {
+            return res.status(401).json(err);
+        } else {
+            return res.status(400).json(err);
+        }
     }
 }

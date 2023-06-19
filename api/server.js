@@ -16,7 +16,15 @@ app.use(express.json())
 app.use('/todo', todoRoute)
 app.use('/user', userRoute)
 
-mongoose.connect(`mongodb://${process.env.MONGO_DB_ADDRESS}:${process.env.MONGO_DB_PORT}/${process.env.MONGO_DB_NAME}`, {
+let mongoConnectionString = ""
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    mongoConnectionString = `mongodb://${process.env.MONGO_DB_ADDRESS}:${process.env.MONGO_DB_PORT}/${process.env.MONGO_DB_NAME}`
+} else {
+    mongoConnectionString = `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@${process.env.MONGO_DB_ADDRESS}/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`
+}
+
+
+mongoose.connect(mongoConnectionString, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log("Connected to DB"))
@@ -28,6 +36,7 @@ app.post('/todos', jwtAuth, async(req, res) => {
     const user = req.user
     const todos = await Todo.find({ userID: user.id });
 
+    
     res.json(todos);
 
 })
