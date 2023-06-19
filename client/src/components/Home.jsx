@@ -2,8 +2,6 @@ import { useState, useEffect, Fragment } from "react";
 
 const API_BASE = "http://localhost:3001"
 
-
-
 const HomePage = () => {
     const [todos, setTodos] = useState([]);
     const [popupActive, setPopupActive] = useState(false)
@@ -74,10 +72,10 @@ const HomePage = () => {
 
     return (
       <div className="App">
-            <h1>Welcome, {`${localStorage.name}`} </h1>
+            <h1>Welcome, {`${localStorage.first_name}`} </h1>
             <h4>Your tasks</h4>
 
-            <div className="todos">
+            <div>
                 { todos.map(todo => ( 
                     <div className={"todo " + (todo.complete ? "is-complete" : "")} 
                     key={todo._id} onClick={() => completeTodo(todo._id)}>

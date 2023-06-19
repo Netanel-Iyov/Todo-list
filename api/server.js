@@ -8,7 +8,6 @@ const app = express()
 const todoRoute = require('./routes/Todo')
 const userRoute = require('./routes/User')
 
-const jwt = require('jsonwebtoken');
 const { jwtAuth } = require('./utils/jwtAuth') 
 
 app.use(cors({origin: "http://localhost:3000"}))

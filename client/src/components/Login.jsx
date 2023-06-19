@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useLayoutEffect} from "react"
 import backgroundImage from '../assets/geometric_background.jpg';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,9 +9,29 @@ const LoginPage = () => {
     const navigate = useNavigate();
 
     // hooks
+    // useLayoutEffect runs the code before the render() function is called 
+    useLayoutEffect (() => {
+        checkIfConnected();
+    }, [])
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [loginError, setLoginError] = useState('')
+    const [rememberMe, setRememberMe] = useState(true)
+    const [loginError, setLoginError] = useState("")
+
+    const checkIfConnected = () => {
+        const token = localStorage.getItem('token')
+        const first_name = localStorage.getItem('first_name')
+        const rememberMe = localStorage.getItem('remember_me')
+        console.log(token, first_name, rememberMe)
+
+        if (rememberMe === 'false' || token === null || token === 'undefinded' || first_name === 'undefined' || first_name === null ) {
+            return
+        }
+        else {
+            navigate('/home')
+        }
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -26,22 +46,28 @@ const LoginPage = () => {
             },
             body: JSON.stringify(data)
         }
-        const response = await fetch(API_BASE + '/user/login', requestOptions).then(res => res.json())
-        
-        // Save the token and name in the local Storage
-        localStorage.setItem('token', response.token)
-        localStorage.setItem('first_name', response.first_name)
+        const response = await fetch(API_BASE + '/user/login', requestOptions)
+        const responseData = await response.json()
 
-        if (!response.token) {
-             setLoginError('* Wrong Login Details')
+        if (!responseData.token) {
+
+            setLoginError('* Wrong Login Details')
+
         } 
         else {
-            // save user and redirect to homepage
+            // Save the token and name in the local Storage
+            localStorage.setItem('token', responseData.token)
+            localStorage.setItem('first_name', responseData.first_name)
+            localStorage.setItem('remember_me', rememberMe)
+
             navigate('/home')
         }
-
-    }
+    }   
     
+    const handleSignUp = () => {
+        navigate('/registration'); // Replace '/registration' with the desired URL of your registration page
+      };
+
     return (
         <div className="bg-cover bg-no-repeat bg-center h-screen flex items-center justify-center" style={{ backgroundImage: `url(${backgroundImage})` }}>
             <div className="flex flex-col justify-center w-screen h-screen ">
@@ -61,15 +87,15 @@ const LoginPage = () => {
                     </div>
                     
                     <div className="flex justify-between text-gray-400 py-2">
-                        <p><input type="checkbox" className="mr-1 text-purple-600 border-purple-600"></input>Remember Me</p>
+                        <p><input type="checkbox" defaultChecked={true} onChange={ (e) => {setRememberMe(!e.target.value)}} value={rememberMe} className="mr-1 text-purple-600 border-purple-600"></input>Remember Me</p>
                         <p>Forgot Password</p>
                     </div>
                     
-                    {loginError && <p className="text-center text-red-500 mt-2">{loginError}</p>}
+                    {loginError && <p className="text-center text-purple-500 mt-2">{loginError}</p>}
 
                     <div>
                         <button type="submit" className="bg-gradient-to-r from-purple-800 to-purple-300 w-full py-2 my-2 rounded-xl font-semibold hover:bg-gradient-to-r hover:from-purple-1000 hover:to-purple-500 mt-8">Sign In</button>
-                        <button className="bg-gradient-to-r from-purple-800 to-purple-300 w-full py-2 my-2 rounded-xl font-semibold hover:bg-gradient-to-r hover:from-purple-1000 hover:to-purple-500">Sign up</button>
+                        <button onClick={handleSignUp} className="bg-gradient-to-r from-purple-800 to-purple-300 w-full py-2 my-2 rounded-xl font-semibold hover:bg-gradient-to-r hover:from-purple-1000 hover:to-purple-500">Sign up</button>
                     </div>  
                 </form>
             </div>

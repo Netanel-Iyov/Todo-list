@@ -9,7 +9,9 @@ router.post('/new', async (req, res) => {
     try {
         const user = new User({
           email: req.body.email,
-          password: req.body.password
+          password: req.body.password,
+          first_name: req.body.firstName,
+          last_name: req.body.lastName
         });
     
         const savedUser = await user.save();
@@ -17,8 +19,10 @@ router.post('/new', async (req, res) => {
       } catch (error) {
         if (error.name === 'ValidationError') {
           res.status(400).json(error);
+          console.log(error)
         } else {
           res.status(500).json({ error: 'An error occurred' });
+          console.log(error)
         }
     }
 })
