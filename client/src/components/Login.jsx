@@ -34,14 +34,15 @@ const LoginPage = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        let data = {email: email,
-                password: password
-            }
+        let data = {
+            email: email,
+            password: password
+        }
 
         let requestOptions = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(data)
         }
@@ -49,11 +50,8 @@ const LoginPage = () => {
         const responseData = await response.json()
 
         if (!responseData.token) {
-
             setLoginError('* Wrong Login Details')
-
-        } 
-        else {
+        } else {
             // Save the token and name in the local Storage
             localStorage.setItem('token', responseData.token)
             localStorage.setItem('first_name', responseData.first_name)
@@ -64,7 +62,7 @@ const LoginPage = () => {
     }   
     
     const handleSignUp = () => {
-        navigate('/registration'); // Replace '/registration' with the desired URL of your registration page
+        navigate('/registration'); 
       };
       
     return (

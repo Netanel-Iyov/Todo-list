@@ -85,6 +85,10 @@ const HomePage = () => {
         setNewTodo("")
     }
 
+    const signOut = () => {
+        localStorage.clear()
+        navigate('/login')
+    }
 
     return (
       <div className="p-8">
@@ -104,6 +108,8 @@ const HomePage = () => {
                     </div>
                 )) } 
             </div>
+            
+            <div className="fixed bottom-8 left-8 flex items-center justify-center w-32 h-12 rounded-full text-base font-bold text-gray-200 bg-gradient-to-br from-[#D81E5B] to-[#8A4EFC] cursor-pointer" onClick={() => signOut(true)}>Sign Out</div>
 
             <div className="fixed bottom-8 right-8 flex items-center justify-center w-32 h-12 rounded-full text-base font-bold text-gray-200 bg-gradient-to-br from-[#D81E5B] to-[#8A4EFC] cursor-pointer" onClick={() => setPopupActive(true)}>Add Task</div>
             {popupActive ? (
