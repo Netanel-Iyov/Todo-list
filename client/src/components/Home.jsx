@@ -34,7 +34,7 @@ const HomePage = () => {
                 setTodos(data)
             }
         } catch(error) {
-            console.error("While getting Todos the following error occured : ", err)
+            console.error("While getting Todos the following error occured : ", error)
         }
     }
 

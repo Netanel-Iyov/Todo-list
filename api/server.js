@@ -10,19 +10,21 @@ const userRoute = require('./routes/User')
 
 const { jwtAuth } = require('./utils/jwtAuth') 
 
-app.use(cors({origin: "http://localhost:3000"}))
+app.use(cors({origin: "http://192.168.1.152:3000"}))
 app.use(express.json())
 
 app.use('/todo', todoRoute)
 app.use('/user', userRoute)
 
-let mongoConnectionString = ""
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    mongoConnectionString = `mongodb://${process.env.MONGO_DB_ADDRESS}:${process.env.MONGO_DB_PORT}/${process.env.MONGO_DB_NAME}`
-} else {
-    mongoConnectionString = `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@${process.env.MONGO_DB_ADDRESS}/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`
-}
+let mongoConnectionString = `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@${process.env.MONGO_DB_ADDRESS}/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`
+// let mongoConnectionString = `mongodb://${process.env.MONGO_DB_ADDRESS}:${process.env.MONGO_DB_PORT}/${process.env.MONGO_DB_NAME}`
+// let mongoConnectionString = ''
 
+// if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+//     mongoConnectionString = `mongodb://127.0.0.1:27017/todo-list`
+// } else {
+//     mongoConnectionString = `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@${process.env.MONGO_DB_ADDRESS}/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`
+// }
 
 mongoose.connect(mongoConnectionString, {
     useNewUrlParser: true,
