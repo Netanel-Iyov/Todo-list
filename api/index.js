@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
@@ -7,16 +8,16 @@ const app = express()
 const todoRoute = require('./routes/Todo')
 const userRoute = require('./routes/User')
 
-const jwt = require('jsonwebtoken');
 const { jwtAuth } = require('./utils/jwtAuth') 
 
-app.use(cors({origin: "http://localhost:3000"}))
+app.use(cors({origin: "https://todo-list-frontend-theta.vercel.app"}))
 app.use(express.json())
 
 app.use('/todo', todoRoute)
 app.use('/user', userRoute)
 
-mongoose.connect("mongodb://127.0.0.1:27017/todo-list", {
+
+mongoose.connect(`${process.env.MONGO_DB_URL}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log("Connected to DB"))
@@ -24,17 +25,17 @@ mongoose.connect("mongodb://127.0.0.1:27017/todo-list", {
 
 const Todo = require('./models/Todo')
 
-app.post('/', async(req, res) => {
-    const apiWelcome = {"welcome_msg": "Welcome to the to-do list api. all requests require token"}
-    res.json(apiWelcome);
-})
-
 app.post('/todos', jwtAuth, async(req, res) => {
-    token = req.body.token
-    const user = jwt.verify(token, 'your_secret_key');
+    const user = req.user
     const todos = await Todo.find({ userID: user.id });
 
+    
     res.json(todos);
+
+})
+
+app.post('/', async(req, res) => {
+    res.json({greeting: "welcome to tood-list api"})
 })
 
 app.listen(3001, () => console.log("Server started on port 3001"))
