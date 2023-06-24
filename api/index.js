@@ -24,6 +24,11 @@ mongoose.connect("mongodb://127.0.0.1:27017/todo-list", {
 
 const Todo = require('./models/Todo')
 
+app.post('/', async(req, res) => {
+    const apiWelcome = {"welcome_msg": "Welcome to the to-do list api. all requests require token"}
+    res.json(apiWelcome);
+})
+
 app.post('/todos', jwtAuth, async(req, res) => {
     token = req.body.token
     const user = jwt.verify(token, 'your_secret_key');
