@@ -81,7 +81,6 @@ const LoginPage = () => {
                     
                     <div className="flex justify-between text-gray-400 py-2">
                         <p><input type="checkbox" defaultChecked={true} onChange={ (e) => {setRememberMe(!e.target.value)}} value={rememberMe} className="mr-1 text-purple-600 border-purple-600"></input>Remember Me</p>
-                        <p>Forgot Password</p>
                     </div>
                     
                     {loginError && <p className="text-center text-purple-500 mt-2">{loginError}</p>}
