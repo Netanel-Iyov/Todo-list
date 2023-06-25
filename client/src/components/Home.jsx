@@ -16,6 +16,7 @@ const HomePage = () => {
 
 
     useEffect (() => {
+        handleConnection();
         GetTodos();
     }, [])
 
@@ -100,7 +101,6 @@ const HomePage = () => {
         navigate('/login')
     }
 
-    handleConnection();
 
     return (
       <div className="p-8">
