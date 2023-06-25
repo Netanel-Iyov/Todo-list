@@ -1,5 +1,6 @@
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, useLayoutEffect, Fragment } from "react";
 import { useNavigate } from 'react-router-dom';
+import { checkIfConnected } from '../utils/utils'
 
 
 const API_BASE = "https://todo-list-api-alpha.vercel.app"
@@ -13,9 +14,19 @@ const HomePage = () => {
     const [popupActive, setPopupActive] = useState(false)
     const [newTodo, setNewTodo] = useState("")
 
+    useLayoutEffect (() => {
+        handleConnection();
+    }, [])
+
     useEffect (() => {
         GetTodos();
     }, [])
+
+    const handleConnection = () => {
+        if (!checkIfConnected()) {
+            navigate("/login")
+        }
+    }
 
     const GetTodos = async () => {
         const token = localStorage.token

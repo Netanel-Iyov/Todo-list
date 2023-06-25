@@ -1,6 +1,7 @@
 import React, {useState, useLayoutEffect} from "react"
 import backgroundImage from '../assets/geometric_background.jpg';
 import { useNavigate } from 'react-router-dom';
+import { checkIfConnected } from '../utils/utils'
 
 
 const API_BASE = "https://todo-list-api-alpha.vercel.app"
@@ -13,7 +14,7 @@ const LoginPage = () => {
     // hooks
     // useLayoutEffect runs the code before the render() function is called 
     useLayoutEffect (() => {
-        checkIfConnected();
+        handleConnection();
     }, [])
 
     const [email, setEmail] = useState("")
@@ -21,16 +22,10 @@ const LoginPage = () => {
     const [rememberMe, setRememberMe] = useState(true)
     const [loginError, setLoginError] = useState("")
 
-    const checkIfConnected = () => {
-        const token = localStorage.getItem('token')
-        const first_name = localStorage.getItem('first_name')
-        const rememberMe = localStorage.getItem('remember_me')
-
-        if (rememberMe === 'false' || token === null || token === 'undefinded' || first_name === 'undefined' || first_name === null ) {
-            return
-        }
-        else {
-            navigate('/home')
+    const handleConnection = () => {
+        console.log()
+        if (checkIfConnected()) {
+           navigate('/home') 
         }
     }
 
