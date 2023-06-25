@@ -1,7 +1,8 @@
 import React, {useState, useLayoutEffect} from "react"
 import backgroundImage from '../assets/geometric_background.jpg';
 import { useNavigate } from 'react-router-dom';
-import { API_BASE } from "../utils/utils";
+import { API_BASE, checkIfConnected } from "../utils/utils";
+
 
 
 const LoginPage = () => {
@@ -11,7 +12,7 @@ const LoginPage = () => {
     // hooks
     // useLayoutEffect runs the code before the render() function is called 
     useLayoutEffect (() => {
-        checkIfConnected();
+        handleConnection();
     }, [])
 
     const [email, setEmail] = useState("")
@@ -19,16 +20,9 @@ const LoginPage = () => {
     const [rememberMe, setRememberMe] = useState(true)
     const [loginError, setLoginError] = useState("")
 
-    const checkIfConnected = () => {
-        const token = localStorage.getItem('token')
-        const first_name = localStorage.getItem('first_name')
-        const rememberMe = localStorage.getItem('remember_me')
-
-        if (rememberMe === 'false' || token === null || token === 'undefinded' || first_name === 'undefined' || first_name === null ) {
-            return
-        }
-        else {
-            navigate('/home')
+    const handleConnection = () => {
+        if (checkIfConnected()) {
+           navigate('/home') 
         }
     }
 
@@ -85,7 +79,6 @@ const LoginPage = () => {
                     
                     <div className="flex justify-between text-gray-400 py-2">
                         <p><input type="checkbox" defaultChecked={true} onChange={ (e) => {setRememberMe(!e.target.value)}} value={rememberMe} className="mr-1 text-purple-600 border-purple-600"></input>Remember Me</p>
-                        <p>Forgot Password</p>
                     </div>
                     
                     {loginError && <p className="text-center text-purple-500 mt-2">{loginError}</p>}

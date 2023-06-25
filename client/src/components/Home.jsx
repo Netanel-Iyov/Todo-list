@@ -1,6 +1,7 @@
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, useLayoutEffect, Fragment } from "react";
 import { useNavigate } from 'react-router-dom';
 import { API_BASE } from "../utils/utils";
+import { checkIfConnected, API_BASE } from '../utils/utils'
 
 
 const HomePage = () => {
@@ -11,9 +12,17 @@ const HomePage = () => {
     const [popupActive, setPopupActive] = useState(false)
     const [newTodo, setNewTodo] = useState("")
 
+
     useEffect (() => {
+        handleConnection();
         GetTodos();
     }, [])
+
+    const handleConnection = () => {
+        if (!checkIfConnected()) {
+            navigate("/")
+        }
+    }
 
     const GetTodos = async () => {
         const token = localStorage.token
@@ -89,6 +98,7 @@ const HomePage = () => {
         localStorage.clear()
         navigate('/login')
     }
+
 
     return (
       <div className="p-8">
