@@ -14,9 +14,7 @@ const HomePage = () => {
     const [popupActive, setPopupActive] = useState(false)
     const [newTodo, setNewTodo] = useState("")
 
-    useLayoutEffect (() => {
-        handleConnection();
-    }, [])
+    handleConnection();
 
     useEffect (() => {
         GetTodos();
