@@ -23,7 +23,6 @@ const LoginPage = () => {
     const [loginError, setLoginError] = useState("")
 
     const handleConnection = () => {
-        console.log()
         if (checkIfConnected()) {
            navigate('/home') 
         }
