@@ -34,7 +34,7 @@ app.post('/todos', jwtAuth, async(req, res) => {
 
 })
 
-app.post('/', async(req, res) => {
+app.get('/', async(req, res) => {
     res.json({greeting: "welcome to tood-list api"})
 })
 
