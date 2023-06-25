@@ -24,7 +24,7 @@ const HomePage = () => {
 
     const handleConnection = () => {
         if (!checkIfConnected()) {
-            navigate("/login")
+            navigate("/")
         }
     }
 
