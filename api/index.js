@@ -10,7 +10,10 @@ const userRoute = require('./routes/User')
 
 const { jwtAuth } = require('./utils/jwtAuth') 
 
-app.use(cors({origin: "https://todo-list-frontend-nine.vercel.app"}))
+app.use(cors({
+        origin: "https://todo-list-frontend-nine.vercel.app"
+    })
+)
 app.use(express.json())
 
 app.use('/todo', todoRoute)
