@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 
 const API_BASE = "https://todo-list-api-alpha.vercel.app"
+// const API_BASE = "http://127.0.0.1:3001"
 
 const HomePage = () => {
+    document.title = 'Home';
     const navigate = useNavigate();
 
     const [todos, setTodos] = useState([]);
