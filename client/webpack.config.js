@@ -53,7 +53,6 @@ module.exports = {
     // fix "process is not defined" error:
       new webpack.ProvidePlugin({
         process: 'process/browser',
-        favicon: "./public/favicon.ico"
       }),
   ]
 };
