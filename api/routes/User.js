@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
   const password = req.body.password
 
   try {
-        const user = await User.findOne({email: email});
+        const user = await User.findOne({email: { '$regex': email, $options: 'i' }});
 
         if (!user) {
             return res.status(404).json({ error: 'User not found' })
