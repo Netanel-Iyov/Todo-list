@@ -14,7 +14,6 @@ const HomePage = () => {
     const [popupActive, setPopupActive] = useState(false)
     const [newTodo, setNewTodo] = useState("")
 
-    handleConnection();
 
     useEffect (() => {
         GetTodos();
@@ -100,6 +99,8 @@ const HomePage = () => {
         localStorage.clear()
         navigate('/login')
     }
+
+    handleConnection();
 
     return (
       <div className="p-8">
