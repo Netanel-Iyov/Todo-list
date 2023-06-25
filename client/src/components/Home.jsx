@@ -2,7 +2,7 @@ import { useState, useEffect, Fragment } from "react";
 import { useNavigate } from 'react-router-dom';
 
 
-const API_BASE = "https://todo-list-cyan-three.vercel.app"
+const API_BASE = "https://todo-list-api-alpha.vercel.app"
 
 const HomePage = () => {
     const navigate = useNavigate();
