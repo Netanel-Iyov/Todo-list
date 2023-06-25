@@ -4,6 +4,7 @@ import HomePage from "./components/Home.jsx"
 import LoginPage from "./components/Login.jsx" 
 import RegistrationPage from './components/Registration.jsx';
 
+
 const App = () => {
     return (
         <Router>
