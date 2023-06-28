@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from "react"
 import backgroundImage from '../assets/geometric_background.jpg';
 import { useNavigate } from 'react-router-dom';
-
-
-const API_BASE = "https://todo-list-api-alpha.vercel.app"
-// const API_BASE = "http://127.0.0.1:3001"
+import { API_BASE } from "../utils/utils";
 
 
 const RegistrationPage = () => {
