@@ -1,6 +1,5 @@
 import { useState, useEffect, useLayoutEffect, Fragment } from "react";
 import { useNavigate } from 'react-router-dom';
-import { API_BASE } from "../utils/utils";
 import { checkIfConnected, API_BASE } from '../utils/utils'
 
 
