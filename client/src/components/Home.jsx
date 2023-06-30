@@ -88,12 +88,13 @@ const HomePage = () => {
         if (title === '') {
             return
         }
+
         const requestOptions = {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({token: localStorage.token, "title": title, "description": description}) 
+            body: JSON.stringify({token: localStorage.token, "title": title, "description": description === '' ? ' ' : description}) 
         }
         const response = await fetch(API_BASE + '/todo/new/', requestOptions)
         .then(res => res.json())
@@ -220,7 +221,7 @@ const HomePage = () => {
 
                         {toggleCollapse[index] ? 
                             <div className="relative bg-[#131A26] p-4 rounded-2xl transition duration-500 mb-4 mt-1 hover:opacity-80">
-                                <p className="mb-2 text-gray-400 dark:text-gray-400">{todo.description}</p>
+                                <p className="mb-2 text-gray-400 dark:text-gray-400">{todo.description === ' ' ? 'No Description Available' : todo.description}</p>
                                 {/* <p className="text-gray-500 dark:text-gray-400">Check out this guide to learn how to <a href="/docs/getting-started/introduction/" className="text-blue-600 dark:text-blue-500 hover:underline">get started</a> and start developing websites even faster with components on top of Tailwind CSS.</p> */}
                             </div> : ""
                         }
