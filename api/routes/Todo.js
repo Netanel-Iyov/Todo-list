@@ -5,16 +5,17 @@ const { jwtAuth } = require('../utils/jwtAuth')
 const Todo = require('../models/Todo')
 
 router.post('/new', jwtAuth ,async(req, res) => {  
-    try {
-      
+    try {    
         const user = req.user
 
         const todo = new Todo({
-          text: req.body.text,
+          title: req.body.title,
+          description: req.body.description,
           userID: user.id
         });
-    
+        
         const savedTodo = await todo.save();
+
         res.json(savedTodo);
       } catch (error) {
         if (error.name === 'ValidationError') {
@@ -42,7 +43,8 @@ router.put('/complete/:id', async (req, res) => {
 
 router.put('/update/:id', async (req, res) => {
   const todo = await Todo.findById(req.params.id)
-  todo.text = req.body.text
+  todo.title = req.body.title
+  todo.description = req.body.description
   todo.save()
 
   res.json(todo)
