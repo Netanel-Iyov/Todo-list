@@ -40,5 +40,14 @@ router.put('/complete/:id', async (req, res) => {
     }
 )
 
+router.put('/update/:id', async (req, res) => {
+  const todo = await Todo.findById(req.params.id)
+  todo.text = req.body.text
+  todo.save()
+
+  res.json(todo)
+  }
+)
+
 
 module.exports = router;
