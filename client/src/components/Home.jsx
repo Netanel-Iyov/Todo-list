@@ -23,11 +23,15 @@ const HomePage = () => {
 
     useEffect (() => {
         handleConnection();
+        localStorage.setItem('first_login', false)
         GetTodos();
     }, [])
 
     const handleConnection = () => {
-        if (!checkIfConnected()) {
+        const rememberMe = localStorage.getItem('remember_me')
+        const first_login = localStorage.getItem('first_login') 
+
+        if (!checkIfConnected() || (rememberMe === 'true' && first_login === 'false') ) {
             navigate("/")
         }
     }
