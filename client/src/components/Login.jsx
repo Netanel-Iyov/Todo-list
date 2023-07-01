@@ -21,8 +21,8 @@ const LoginPage = () => {
     const [loginError, setLoginError] = useState("")
 
     const handleConnection = () => {
-        if (checkIfConnected()) {
-           navigate('/home') 
+        if (checkIfConnected() && localStorage.getItem('rememberMe') == 'true') {
+                navigate('/home') 
         }
     }
 
@@ -50,6 +50,7 @@ const LoginPage = () => {
             localStorage.setItem('token', responseData.token)
             localStorage.setItem('first_name', responseData.first_name)
             localStorage.setItem('remember_me', rememberMe)
+            localStorage.setItem('first_login', true)
 
             navigate('/home')
         }
