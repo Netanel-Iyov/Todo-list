@@ -1,7 +1,7 @@
 import { useState, useEffect , Fragment } from "react";
 import { useNavigate } from 'react-router-dom';
 import { checkIfConnected, API_BASE } from '../utils/utils'
-import { PlusCircleIcon, ArrowLeftCircleIcon, XCircleIcon, TrashIcon, PencilSquareIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
+import { PlusCircleIcon, ArrowLeftCircleIcon, XCircleIcon, TrashIcon, PencilSquareIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
 
 
 const HomePage = () => {
@@ -24,14 +24,14 @@ const HomePage = () => {
     useEffect (() => {
         handleConnection();
         localStorage.setItem('first_login', false)
-        GetTodos();
+        GetTodos()
     }, [])
 
     const handleConnection = () => {
         const rememberMe = localStorage.getItem('remember_me')
         const first_login = localStorage.getItem('first_login') 
 
-        if (!checkIfConnected() || (rememberMe === 'true' && first_login === 'false') ) {
+        if (!checkIfConnected() || (rememberMe === 'false' && first_login === 'false') ) {
             navigate("/")
         }
     }
@@ -217,7 +217,6 @@ const HomePage = () => {
                                         const arrayToUpdate = [...toggleCollapse]
                                         arrayToUpdate[index] = !arrayToUpdate[index]
                                         setToggleCollapse(arrayToUpdate)
-                                        console.log(toggleCollapse)
                                     }
                                 }/>
 
