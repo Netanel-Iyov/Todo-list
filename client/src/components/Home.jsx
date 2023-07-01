@@ -114,7 +114,7 @@ const HomePage = () => {
         const requestOptions = {
             method: 'PUT',
             headers: {'Content-type': 'application/json'},
-            body: JSON.stringify({title: todoTitle, description: todoDescription})
+            body: JSON.stringify({title: todoTitle, description: todoDescription === '' ? " " : todoDescription})
         }
         await fetch(API_BASE + `/todo/update/${TodoObject._id}`, requestOptions)
             .then(res => res.json())
