@@ -207,7 +207,7 @@ const HomePage = () => {
                                         setEditPopupActive(true)
                                         setTodoToEdit(todo)
                                         setTodoTitle(todo.title)
-                                        setTodoDescription(todo.description)
+                                        setTodoDescription(todo.description === ' ' ? '' : todo.description)
                                     }
                                 }/>
                                 
