@@ -1,43 +1,52 @@
-require("dotenv").config()
+// Importing required modules
+require("dotenv").config() // Loads environment variables from a .env file into process.env
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 
+// Creating an instance of the Express application
 const app = express()
 
-const todoRoute = require('./routes/Todo')
-const userRoute = require('./routes/User')
+// Importing route handlers
+const todoRoute = require('./routes/Todo') // Handles routes for todos
+const userRoute = require('./routes/User') // Handles routes for users
 
-const { jwtAuth } = require('./utils/jwtAuth') 
+const { jwtAuth } = require('./utils/jwtAuth') // JWT authentication utility
 
+// Applying middleware
 app.use(cors({
-        origin: "https://todo-list-frontend-nine.vercel.app"
-        // origin: "http://192.168.1.152:3000"
-    })
-)
-app.use(express.json())
+    // Set the allowed origin for CORS requests
+    origin: "https://todo-list-frontend-nine.vercel.app"
+    // origin: "http://192.168.1.152:3000"
+}))
 
-app.use('/todo', todoRoute)
-app.use('/user', userRoute)
+app.use(express.json()) // Parsing request bodies as JSON
 
+// Registering route handlers
+app.use('/todo', todoRoute) // Mounts the todoRoute at '/todo'
+app.use('/user', userRoute) // Mounts the userRoute at '/user'
 
+// Connecting to the MongoDB database
 mongoose.connect(`${process.env.MONGO_DB_URL}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log("Connected to DB"))
 .catch(console.error)
 
-const Todo = require('./models/Todo')
+const Todo = require('./models/Todo') // Importing the Todo model
 
-app.post('/todos', jwtAuth, async(req, res) => {
+// Route for creating a new todo (requires JWT authentication)
+app.post('/todos', jwtAuth, async (req, res) => {
     const user = req.user
-    const todos = await Todo.find({ userID: user.id });
+    const todos = await Todo.find({ userID: user.id })
 
-    res.json(todos);
+    res.json(todos)
 })
 
-app.get('/debug', async(req, res) => {
-    res.json({greeting: "welcome to tood-list api"})
+// Debug route for testing purposes
+app.get('/debug', async (req, res) => {
+    res.json({ greeting: "Welcome to the to-do list API" })
 })
 
+// Starting the server
 app.listen(3001, () => console.log("Server started"))
