@@ -1,5 +1,5 @@
 // Importing required modules
-require("dotenv").config() // Loads environment variables from a .env file into process.env
+require("dotenv").config({path: '../.env'}) // Loads environment variables from a .env file into process.env
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
@@ -16,8 +16,7 @@ const { jwtAuth } = require('./utils/jwtAuth') // JWT authentication utility
 // Applying middleware
 app.use(cors({
     // Set the allowed origin for CORS requests
-    origin: "https://todo-list-frontend-nine.vercel.app"
-    // origin: "http://192.168.1.152:3000"
+    origin: process.env.CORS_ORIGIN
 }))
 
 app.use(express.json()) // Parsing request bodies as JSON
