@@ -3,6 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const cryptoBrowserify = require.resolve('crypto-browserify');
 
+const Dotenv = require("dotenv-webpack") // Loads environment variables from a .env file into process.env
+
 module.exports = {
   mode: 'development',
   entry: './src/index.js',
@@ -39,6 +41,8 @@ module.exports = {
       util: false,
       stream: false,
       'crypto-browserify': cryptoBrowserify,
+      "path": require.resolve("path-browserify"),
+      "os": false
     },
   },
   // define web server config
@@ -47,6 +51,9 @@ module.exports = {
     hot: true,
   },
   plugins: [
+    new Dotenv( {
+      path: '../.env'
+    }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),

@@ -1,7 +1,6 @@
-export const API_BASE = "https://todo-list-api-alpha.vercel.app" 
-// export const API_BASE = "http://127.0.0.1:3001"
-
+export const API_BASE = `${process.env.API_BASE}`
 // utility function to check if a user is already connected
+
 export const checkIfConnected = () => {
     const token = localStorage.getItem('token')
     const first_name = localStorage.getItem('first_name')
