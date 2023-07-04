@@ -299,7 +299,7 @@ const HomePage = () => {
             {editPopUpActive ? createEditPopUpFragment() : ""}
             
       </div>
-    )
+  )
 }
 
 export default HomePage
