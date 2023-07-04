@@ -1,4 +1,4 @@
-export const API_BASE = `${process.env.API_BASE}`
+export const API_BASE = process.env.API_BASE
 // utility function to check if a user is already connected
 
 export const checkIfConnected = () => {
