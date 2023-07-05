@@ -35,6 +35,7 @@ module.exports = {
   // define resolves 
   resolve: {
     modules: ['node_modules', 'src'],
+    extensions: ['.js', '.jsx'],
     fallback: {
       buffer: false,
       crypto: false,

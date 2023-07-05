@@ -2,6 +2,7 @@ import { useState, useEffect , Fragment } from "react"
 import { useNavigate } from 'react-router-dom'
 import { checkIfConnected, API_BASE } from '../utils/utils'
 import { PlusCircleIcon, ArrowLeftCircleIcon, XCircleIcon, TrashIcon, PencilSquareIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
+import FilterDropdown from './FilterDropdown'
 
 
 const HomePage = () => {
@@ -18,8 +19,10 @@ const HomePage = () => {
     const [newPopupActive, setNewPopupActive] = useState(false)
     const [editPopUpActive, setEditPopupActive] = useState(false)
     const [todoToEdit, setTodoToEdit] = useState(undefined)
-    const [toggleCollapse, setToggleCollapse] = useState([])
-  
+    const [toggleDescriptionCollapse, setToggleDescriptionCollapse] = useState([])
+    const [toggleFilterDropdown, setToggleFilterDropdown] = useState(false)
+
+
     useEffect (() => {
       // Check network connection and user login status when the component mounts
       handleConnection()
@@ -57,10 +60,10 @@ const HomePage = () => {
         }
   
         if (response.ok) {
-          // Parse the response data and update the todos and toggleCollapse states
+          // Parse the response data and update the todos and toggleDescriptionCollapse states
           const data = await response.json()
           setTodos(data)
-          setToggleCollapse(Array.from({ length: data.length }).fill(false))
+          setToggleDescriptionCollapse(Array.from({ length: data.length }).fill(false))
         }
       } catch (error) {
         console.error("An error occurred while getting todos: ", error)
@@ -218,16 +221,23 @@ const HomePage = () => {
          */
         return createPopupFragment('Edit Task', 'Update Task', () => editTodo(todoToEdit), setEditPopupActive)
       }
-
     
+    const handleFilterToggleClick = () => {
+      setToggleFilterDropdown(!toggleFilterDropdown)
+    }
+
     return (
       <div className="p-8">
             {/* Welcome message */}
             <h1 className="text-4xl font-bold mb-8">Welcome, {`${localStorage.first_name}`} </h1>
             
             {/* Section title */}
-            <div className="flex justify-between">
-                <h4 className="order-1 text-base text-[#61759b] uppercase font-normal">Your tasks</h4>
+            <div className="flex justify-between items-center">
+                <h4 className="order-0 text-base text-[#61759b] uppercase font-normal">Your tasks</h4>
+            
+            {/*  */}
+              <FilterDropdown toggle={toggleFilterDropdown} onClick={handleFilterToggleClick}></FilterDropdown>
+            {/*  */}
             </div>
 
             <div>
@@ -263,18 +273,18 @@ const HomePage = () => {
                                 <ChevronDownIcon className="absolute top-1/2 right-20 transform -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center" 
                                     onClick={(event) => {
                                         event.stopPropagation()
-                                        const arrayToUpdate = [...toggleCollapse]
+                                        const arrayToUpdate = [...toggleDescriptionCollapse]
                                         arrayToUpdate[index] = !arrayToUpdate[index]
-                                        setToggleCollapse(arrayToUpdate)
+                                        setToggleDescriptionCollapse(arrayToUpdate)
                                     }
                                 }/>
 
                         </div>
                         
                         {/* Description */}
-                        {toggleCollapse[index] ? 
+                        {toggleDescriptionCollapse[index] ? 
                             <div className="relative bg-[#131A26] p-4 rounded-2xl transition duration-500 mb-4 mt-1 hover:opacity-80">
-                                <p className="mb-2 text-gray-400 dark:text-gray-400">{todo.description === ' ' ? 'No Description Available' : todo.description}</p>
+                                <p style={{whiteSpace: "pre-line"}} className="mb-2 text-gray-400 dark:text-gray-400">{todo.description === ' ' ? 'No Description Available' : todo.description}</p>
                             </div> : ""
                         }
                     </div>
