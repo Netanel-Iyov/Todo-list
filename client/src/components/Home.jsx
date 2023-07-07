@@ -274,7 +274,7 @@ const HomePage = () => {
                         {/* Description */}
                         {toggleCollapse[index] ? 
                             <div className="relative bg-[#131A26] p-4 rounded-2xl transition duration-500 mb-4 mt-1 hover:opacity-80">
-                                <p className="mb-2 text-gray-400 dark:text-gray-400">{todo.description === ' ' ? 'No Description Available' : todo.description}</p>
+                                <p style={{whiteSpace: "pre-line"}} className="mb-2 text-gray-400 dark:text-gray-400">{todo.description === ' ' ? 'No Description Available' : todo.description}</p>
                             </div> : ""
                         }
                     </div>

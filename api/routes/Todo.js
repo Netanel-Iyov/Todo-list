@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const { jwtAuth } = require('../utils/jwtAuth') // JWT authentication middleware
+const { jwtAuth } = require('../utils/utils') // JWT authentication middleware
 const Todo = require('../models/Todo') // Todo model
 
 /**
