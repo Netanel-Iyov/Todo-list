@@ -1,5 +1,6 @@
 .vscode
 */node_modules
+.env
 
 # Client app files to ignore
 

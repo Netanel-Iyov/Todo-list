@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import backgroundImage from '../assets/geometric_background.jpg'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { API_BASE } from "../utils/utils"
 
 /**
@@ -128,6 +128,8 @@ const RegistrationPage = () => {
             >
               Sign up
             </button>
+
+            <p className="mt-1 relative left-5">Already have a user? Please sign in{' '}<Link to="/login" style={{ color: 'blue', textDecoration: 'underline' }}>here</Link></p>
           </div>
         </form>
       </div>
