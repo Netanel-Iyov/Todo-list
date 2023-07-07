@@ -55,7 +55,6 @@ const RegistrationPage = () => {
     try {
       const response = await fetch(API_BASE + '/user/new', requestOptions)
       if (response.ok) {
-        const data = await response.json()
         navigate('/login') // Redirects the user to the login page
       } else {
         setLoginError('* Wrong Registration Details')

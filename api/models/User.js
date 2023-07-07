@@ -1,3 +1,5 @@
+
+const { hashPassword } = require('../utils/utils') // JWT authentication middleware
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
@@ -23,6 +25,18 @@ const UserSchema = new Schema({
   timestamp: {
     type: String,
     default: Date.now()
+  }
+})
+
+// middleware for mongoose - save hashed passwords in the database
+UserSchema.pre('save', async function (next) {
+  try {
+    const hashedPassword = hashPassword(this.password)
+    this.password = hashedPassword
+    next()
+  } catch (error) {
+    console.log(error)
+    next(error)
   }
 })
 

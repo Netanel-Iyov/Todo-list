@@ -11,7 +11,7 @@ const app = express()
 const todoRoute = require('./routes/Todo') // Handles routes for todos
 const userRoute = require('./routes/User') // Handles routes for users
 
-const { jwtAuth } = require('./utils/jwtAuth') // JWT authentication utility
+const { jwtAuth } = require('./utils/utils') // JWT authentication utility
 
 // Applying middleware
 app.use(cors({

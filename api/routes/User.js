@@ -1,3 +1,5 @@
+const { compareHash } = require('../utils/utils') // JWT authentication middleware
+
 const express = require('express')
 const router = express.Router()
 
@@ -45,7 +47,8 @@ router.post('/login', async (req, res) => {
       return res.status(404).json({ error: 'User not found' })
     }
 
-    if (password !== user.password) {
+
+    if (!compareHash(password, user.password)) {
       // Return a 401 Unauthorized status if the password is incorrect
       return res.status(401).json({ error: 'Incorrect password' })
     }

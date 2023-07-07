@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const bcrypt = require("bcrypt")
 
 /**
  * Middleware function for JWT authentication.
@@ -25,4 +26,17 @@ exports.jwtAuth = (req, res, next) => {
             return res.status(400).json(err)
         }
     }
+}
+
+// function to hash strings using bcrypt module
+exports.hashPassword = (password) => {
+    const salt = bcrypt.genSaltSync(10)
+    const hashedPassword = bcrypt.hashSync(password, salt)
+
+    return hashedPassword
+}
+
+// compare raw password and hashed strings
+exports.compareHash = (password, hashedPassword) => {
+    return bcrypt.compareSync(password, hashedPassword)
 }
