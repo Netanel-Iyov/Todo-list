@@ -54,8 +54,18 @@ const LoginPage = () => {
     const response = await fetch(API_BASE + '/user/login', requestOptions)
     const responseData = await response.json()
 
-    if (!responseData.token) {
-      setLoginError('* Wrong Login Details')
+    if (!response.ok) {
+      switch(response.status) {
+        case 401:
+          setLoginError('Wrong password')
+          break
+        case 404:
+          setLoginError('Unknown email address. Please Sign Up.')
+          break
+        default:
+          setLoginError('An unexpected error occured. Please try again')
+      }
+      
     } else {
       // Save the token and name in the local Storage
       localStorage.setItem('token', responseData.token)
@@ -119,12 +129,14 @@ const LoginPage = () => {
             </p>
           </div>
           
-          {loginError && <p className="text-center text-purple-500 mt-2">{loginError}</p>}
+          {loginError &&  
+            <div className="bg-red-600 w-3/4 h-6 2 pt-1 rounded-md text-xs flex justify-center relative left-10 mt-2"> {loginError} </div>
+          }
 
           <div>
             <button
               type="submit"
-              className="bg-gradient-to-r from-purple-800 to-purple-300 w-full py-2 my-2 rounded-xl font-semibold hover:bg-gradient-to-r hover:from-purple-1000 hover:to-purple-500 mt-8"
+              className="bg-gradient-to-r from-purple-800 to-purple-300 w-full py-2 rounded-xl font-semibold hover:bg-gradient-to-r hover:from-purple-1000 hover:to-purple-500 mt-4"
             >
               Sign In
             </button>
