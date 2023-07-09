@@ -14,13 +14,19 @@ const RegistrationPage = () => {
   // Hooks for managing state
   const [email, setEmail] = useState("") // State for the email input field
   const [password, setPassword] = useState("") // State for the password input field
+  const [verifyPassword, setVerifyPassword] = useState("") // State for the verify password input field
   const [firstName, setFirstName] = useState("") // State for the first name input field
   const [lastName, setLastName] = useState("") // State for the last name input field
-  const [loginError, setLoginError] = useState("") // State for displaying login errors
+  const [registrationError, setRegistrationError] = useState("") // State for displaying login errors
+
+  const [loading, setLoading] = useState("") // State for displaying loading component
 
   // useEffect runs the code after the component is rendered
   useEffect(() => {
     ClearLocalStorage()
+    setTimeout(() => {
+      setLoading(false)
+    }, 8000)
   }, [])
 
   /**
@@ -57,10 +63,10 @@ const RegistrationPage = () => {
       if (response.ok) {
         navigate('/login') // Redirects the user to the login page
       } else {
-        setLoginError('* Wrong Registration Details')
+        setRegistrationError('* Wrong Registration Details')
       }
     } catch (error) {
-      setLoginError('* Wrong Registration Details')
+      setRegistrationError('* Wrong Registration Details')
     }
   }
 
@@ -119,17 +125,38 @@ const RegistrationPage = () => {
             />
           </div>
 
-          {loginError && <p className="text-center text-purple-500 mt-2">{loginError}</p>}
+          <div className="flex flex-col text-gray-400 py-2">
+            <label>Verify Password</label>
+            <input
+              className="rounded-lg bg-gray-500 mt-1 p-2 focus:border-purple-600 focus:bg-gray-800 focus:outline-none"
+              type="password"
+              placeholder="********"
+              name="password"
+              onChange={(e) => { 
+                setVerifyPassword(e.target.value) 
+                if (password === e.target.value) {
+                  setRegistrationError("")
+                } else { 
+                setRegistrationError("Passwords do not match")
+                }
+              }}
+              
+              value={verifyPassword}
+              required
+            />
+          </div>
+          
+          {registrationError && <div className="bg-red-600 w-3/4 h-6 2 pt-1 rounded-md text-xs flex justify-center relative left-10 mt-2"> {registrationError} </div>}
 
           <div>
             <button
               type="submit"
-              className="bg-gradient-to-r from-purple-800 to-purple-300 w-full py-2 my-2 rounded-xl font-semibold hover:bg-gradient-to-r hover:from-purple-1000 hover:to-purple-500 mt-8"
+              className="bg-gradient-to-r from-purple-800 to-purple-300 w-full py-2 my-2 rounded-xl font-semibold hover:bg-gradient-to-r hover:from-purple-1000 hover:to-purple-500 mt-4"
             >
               Sign up
             </button>
 
-            <p className="mt-1 relative left-5">Already have a user? Please sign in{' '}<Link to="/login" style={{ color: 'blue', textDecoration: 'underline' }}>here</Link></p>
+            <p className="mt-1 relative left-4">Already have a user? Please sign in{' '}<Link to="/login" style={{ color: 'blue', textDecoration: 'underline' }}>here</Link></p>
           </div>
         </form>
       </div>
