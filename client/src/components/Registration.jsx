@@ -19,7 +19,6 @@ const RegistrationPage = () => {
   const [firstName, setFirstName] = useState("") // State for the first name input field
   const [lastName, setLastName] = useState("") // State for the last name input field
   const [registrationError, setRegistrationError] = useState("") // State for displaying login errors
-
   const [loading, setLoading] = useState(false) // State for displaying loading component
 
   // useEffect runs the code after the component is rendered
@@ -64,12 +63,18 @@ const RegistrationPage = () => {
       if (response.ok) {
         navigate('/login') // Redirects the user to the login page
       } else {
-        setRegistrationError('Wrong Registration Details')
+        switch(response.status) {
+          case 401:
+            setRegistrationError('Email already exist in the system')
+            break
+          default:
+            setRegistrationError('Unexpected error has occured')
+        }
       }
     } catch (error) {
       setRegistrationError('Wrong Registration Details')
     } finally {
-        setLoading(false)
+      setLoading(false)
     }
 
   }
@@ -78,7 +83,7 @@ const RegistrationPage = () => {
     <div className="bg-cover bg-no-repeat bg-center h-screen flex items-center justify-center" style={{ backgroundImage: `url(${backgroundImage})` }}>
 
     {/* if we are witing for response from server after submitting form - display loading widget else display the page */}
-    { loading ? <MoonLoader size={50} color={'#FFF'} loading={loading} /> :
+    { loading ? <div> <MoonLoader size={50} color={'##8A4EFC'} loading={loading} /> <p className="pt-1">Signing Up</p> </div>:
 
       <div className="flex flex-col justify-center w-screen h-screen ">
         <form className="max-w-[400px] bg-gray-800 w-full mx-auto p=8 px-8 py-4 rounded-lg" onSubmit={handleSubmit}>

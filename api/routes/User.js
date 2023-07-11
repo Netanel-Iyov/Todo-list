@@ -22,12 +22,16 @@ router.post('/new', async (req, res) => {
     const savedUser = await user.save()
     res.json(savedUser)
   } catch (error) {
+    console.log(error)
+
     if (error.name === 'ValidationError') {
       // Return a 400 Bad Request status if the user validation fails
-      res.status(400).json(error)
+      return res.status(400).json(error)
+    } else if (error && error.code === 11000) {
+      res.status(401).json(error)
     } else {
       // Return a 500 Internal Server Error status for any other errors
-      res.status(500).json({ error: 'An error occurred' })
+      return res.status(500).json({ error: 'An error occurred' })
     }
   }
 })
