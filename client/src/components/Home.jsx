@@ -2,6 +2,7 @@ import { useState, useEffect , Fragment } from "react"
 import { useNavigate } from 'react-router-dom'
 import { checkIfConnected, API_BASE } from '../utils/utils'
 import { PlusCircleIcon, ArrowLeftCircleIcon, XCircleIcon, TrashIcon, PencilSquareIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
+import { MoonLoader } from "react-spinners"
 
 
 const HomePage = () => {
@@ -19,6 +20,8 @@ const HomePage = () => {
     const [editPopUpActive, setEditPopupActive] = useState(false)
     const [todoToEdit, setTodoToEdit] = useState(undefined)
     const [toggleCollapse, setToggleCollapse] = useState([])
+    const [loading, setLoading] = useState(true) // State for displaying loading component
+
   
     useEffect (() => {
       // Check network connection and user login status when the component mounts
@@ -39,6 +42,7 @@ const HomePage = () => {
     }
   
     const GetTodos = async () => {
+      setLoading(true)
       // Fetch the list of todos from the API and update the todos state
       const token = localStorage.token
       const requestOptions = {
@@ -49,7 +53,7 @@ const HomePage = () => {
   
       try {
         const response = await fetch(API_BASE + '/todos', requestOptions)
-  
+        
         if (response.status === 401) {
           // Clear local storage and navigate to the login page if the user is not authorized
           localStorage.clear()
@@ -65,6 +69,7 @@ const HomePage = () => {
       } catch (error) {
         console.error("An error occurred while getting todos: ", error)
       }
+      setLoading(false)
     }
   
     const completeTodo = async (id) => {
@@ -230,6 +235,8 @@ const HomePage = () => {
                 <h4 className="order-1 text-base text-[#61759b] uppercase font-normal">Your tasks</h4>
             </div>
 
+            {loading ? <div className="pt-16 flex flex-col items-center"> <MoonLoader size={50} color={'#8A4EFC'} loading={loading} css={"padding: 100px; margin: auto; width: 50%; border: 3px solid green;padding: 10px;"} />  <p className="pt-1">Loading tasks</p> </div> : 
+
             <div>
                 { todos.map((todo, index) => ( 
                     <div key={todo._id}>
@@ -280,6 +287,7 @@ const HomePage = () => {
                     </div>
                 )) } 
             </div>
+            }     
             
             {/* Sign Out button */}
             <div className="fixed bottom-8 left-8 flex items-center justify-center w-32 h-12 rounded-full text-base font-bold bg-gray-200 bg-gradient-to-br from-[#D81E5B] to-[#8A4EFC] cursor-pointer" onClick={() => signOut(true)}>Sign Out&nbsp;

@@ -2,6 +2,8 @@ import React, { useState, useLayoutEffect } from "react"
 import backgroundImage from '../assets/geometric_background.jpg'
 import { useNavigate } from 'react-router-dom'
 import { API_BASE, checkIfConnected } from "../utils/utils"
+import { MoonLoader } from "react-spinners"
+
 
 /**
  * The LoginPage component represents the login page of the application.
@@ -20,6 +22,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("") // State for the password input field
   const [rememberMe, setRememberMe] = useState(true) // State for the "Remember Me" checkbox
   const [loginError, setLoginError] = useState("") // State for displaying login errors
+  const [loading, setLoading] = useState(false) // State for displaying loading component
 
   /**
    * Checks if the user is already logged in and has chosen to be remembered.
@@ -37,6 +40,7 @@ const LoginPage = () => {
    */
   const handleSubmit = async (event) => {
     event.preventDefault() // Prevents the default form submission behavior
+    setLoading(true)
 
     let data = {
       email: email,
@@ -55,6 +59,7 @@ const LoginPage = () => {
     const responseData = await response.json()
 
     if (!response.ok) {
+      setLoading(false)
       switch(response.status) {
         case 401:
           setLoginError('Wrong password')
@@ -87,6 +92,10 @@ const LoginPage = () => {
   
   return (
     <div className="bg-cover bg-no-repeat bg-center h-screen flex items-center justify-center" style={{ backgroundImage: `url(${backgroundImage})` }}>
+    
+    {/* if we are witing for response from server after submitting form - display loading widget else display the page */}
+    { loading ? <div> <MoonLoader size={50} color={'#8A4EFC'} loading={loading} />  <p className="pt-1">Logging In</p> </div>:
+
       <div className="flex flex-col justify-center w-screen h-screen ">
         <form className="max-w-[400px] bg-gray-800 w-full mx-auto p=8 px-8 py-4 rounded-lg" onSubmit={handleSubmit}>
           <h2 className="text-4xl dark:text-white font-bold text-center">Sign In</h2>
@@ -149,6 +158,7 @@ const LoginPage = () => {
           </div>  
         </form>
       </div>
+      }
     </div>
   )
 }
