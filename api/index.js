@@ -1,5 +1,5 @@
 // Importing required modules
-require("dotenv").config({path: '../.env'}) // Loads environment variables from a .env file into process.env
+require("dotenv").config({path: './.env'}) // Loads environment variables from a .env file into process.env
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
