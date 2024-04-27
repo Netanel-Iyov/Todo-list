@@ -26,7 +26,10 @@ app.use('/todo', todoRoute) // Mounts the todoRoute at '/todo'
 app.use('/user', userRoute) // Mounts the userRoute at '/user'
 
 // Connecting to the MongoDB database
-mongoose.connect(`${process.env.MONGO_DB_URL}`, {
+// const mongoConnectionString = `mongodb://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASS}@${process.env.MONGO_DB_DOMAIN}:${process.env.MONGO_DB_PORT}/${process.env.MONGO_DATABASE_NAME}`
+const mongoConnectionString = `mongodb://${process.env.MONGO_DB_DOMAIN}:${process.env.MONGO_DB_PORT}/${process.env.MONGO_DATABASE_NAME}`
+console.log(`connecting to ${mongoConnectionString} `)
+mongoose.connect(mongoConnectionString, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log("Connected to DB"))
