@@ -1,0 +1,22 @@
+# Use the official Node.js image as the base image
+FROM node:18.16.0-alpine3.18
+
+# Set the working directory
+WORKDIR /api
+
+# Copy package.json and package-lock.json files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code, and specifically - only .env.dev
+COPY  . .
+RUN rm ./.env*
+COPY .env.dev ./.env
+
+# Expose the port your application runs on
+EXPOSE 3001
+
+# Start the application in development mode
+CMD ["npm", "run", "development"]

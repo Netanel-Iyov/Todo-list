@@ -52,7 +52,7 @@ module.exports = {
   },
   plugins: [
     new Dotenv( {
-      path: '../.env',
+      path: './.env',
       systemvars: true
     }),
     new HtmlWebpackPlugin({
