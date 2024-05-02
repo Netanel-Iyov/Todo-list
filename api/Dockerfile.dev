@@ -12,7 +12,7 @@ RUN npm install
 
 # Copy the rest of the application code, and specifically - only .env.dev
 COPY  . .
-RUN rm ./.env*
+RUN rm ./.env* || true
 COPY .env.dev ./.env
 
 # Expose the port your application runs on
