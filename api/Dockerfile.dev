@@ -20,3 +20,6 @@ EXPOSE 3001
 
 # Start the application in development mode
 CMD ["npm", "run", "development"]
+
+
+
