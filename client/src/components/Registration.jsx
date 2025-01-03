@@ -58,6 +58,7 @@ const RegistrationPage = () => {
     }
 
     try {
+      console.log('API_BASE: ', API_BASE)
       const response = await fetch(API_BASE + '/user/new', requestOptions)
       
       if (response.ok) {
