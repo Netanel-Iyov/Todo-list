@@ -5,6 +5,7 @@
 
 # Client app files to ignore
 
+
 # dependencies
 client/.pnp
 client/.pnp.js
