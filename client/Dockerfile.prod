@@ -13,6 +13,12 @@ RUN npm ci
 # Copy the rest of the application code
 COPY . .
 
+# Accept an argument for REACT_APP_API_BASE
+ARG REACT_APP_API_BASE
+
+# Set the environment variable from the argument
+ENV REACT_APP_API_BASE=$REACT_APP_API_BASE
+
 # Build the React app for production
 RUN npm run build-prod
 
