@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require("bcrypt")
 
+const a = 'a'
+
 /**
  * Middleware function for JWT authentication.
  * Verifies the provided token and attaches the user object to the request object.
