@@ -1,5 +1,5 @@
 # Step 1: Build the React app
-FROM --platform=linux/amd64 node:18.16.0-alpine3.18 AS build
+FROM node:18.16.0-alpine3.18 AS build
 
 # Set the working directory
 WORKDIR /app
